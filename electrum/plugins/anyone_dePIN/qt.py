@@ -22,7 +22,7 @@ class Plugin(BasePlugin):
         print(self,parent,config)
         print("starting anon client")
         subprocess.run("pwd",cwd="./electrum/plugins/anyone_dePIN")
-        subprocess.run("./anon -f anonrc --agree-to-terms",cwd="./electrum/plugins/anyone_dePIN",shell=True)
+        proc = subprocess.Popen("./anon -f anonrc --agree-to-terms",cwd="./electrum/plugins/anyone_dePIN",shell=True)
 
         print("SETTING NETWORK PROXY")
         network = Network.get_instance()
