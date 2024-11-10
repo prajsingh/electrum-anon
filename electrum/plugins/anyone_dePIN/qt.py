@@ -31,7 +31,8 @@ class Plugin(BasePlugin):
             proc = subprocess.Popen("./anon-mac -f anonrc --agree-to-terms",cwd="./electrum/plugins/anyone_dePIN",shell=True, stdin=None, stdout=None, stderr=None,
     close_fds=True)
         elif operating_software == "Windows":
-            print("get a better computer loser")
+            proc = subprocess.Popen("./anon-win",cwd="./electrum/plugins/anyone_dePIN",shell=True, stdin=None, stdout=None, stderr=None,
+    close_fds=True)
 
         print("SETTING NETWORK PROXY")
         network = Network.get_instance()
