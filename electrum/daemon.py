@@ -56,6 +56,7 @@ from .exchange_rate import FxThread
 from .logging import get_logger, Logger
 from . import GuiImportError
 from .plugin import run_hook, Plugins
+import subprocess
 
 if TYPE_CHECKING:
     from electrum import gui
@@ -606,6 +607,7 @@ class Daemon(Logger):
             if self.listen_jsonrpc:
                 self.logger.info("removing lockfile")
                 remove_lockfile(get_lockfile(self.config))
+            subprocess.run("kill $(pgrep anon)",shell=True)
             self.logger.info("stopped")
             self._stopped_event.set()
 
