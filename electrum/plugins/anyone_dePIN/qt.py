@@ -1,7 +1,7 @@
 import random
 
-from PyQt5.QtWidgets import (QVBoxLayout, QGridLayout, QPushButton)
-from PyQt5.QtGui import QFontMetrics
+from PyQt6.QtWidgets import (QVBoxLayout, QGridLayout, QPushButton)
+from PyQt6.QtGui import QFontMetrics
 
 from electrum.plugin import BasePlugin, hook
 from electrum.i18n import _
@@ -11,6 +11,8 @@ from electrum.gui.qt.util import (read_QIcon, EnterButton, WWLabel, icon_path,
 from functools import partial
 from electrum.network import Network
 import subprocess
+import platform
+
 class Plugin(BasePlugin):
     vkb = None
     vkb_index = 0
@@ -21,8 +23,15 @@ class Plugin(BasePlugin):
         print("RUNNNING!!!!")
         print(self,parent,config)
         print("starting anon client")
+        operating_software = str(platform.system())
         subprocess.run("pwd",cwd="./electrum/plugins/anyone_dePIN")
-        proc = subprocess.Popen("./anon -f anonrc --agree-to-terms",cwd="./electrum/plugins/anyone_dePIN",shell=True)
+        if operating_software == "Linux":
+            proc = subprocess.Popen("./anon -f anonrc --agree-to-terms",cwd="./electrum/plugins/anyone_dePIN",shell=True)
+        elif operating_software == "Darwin":
+            proc = subprocess.Popen("./anon-mac -f anonrc --agree-to-terms",cwd="./electrum/plugins/anyone_dePIN",shell=True, stdin=None, stdout=None, stderr=None,
+    close_fds=True)
+        elif operating_software == "Windows":
+            print("get a better computer loser")
 
         print("SETTING NETWORK PROXY")
         network = Network.get_instance()
